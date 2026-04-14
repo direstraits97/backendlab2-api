@@ -67,6 +67,44 @@ app.post("/workexperience", (req, res) => {
   }
 });
 
+app.put("/workexperience/:id", (req, res) => {
+  const { companyname, jobtitle, location, startdate, enddate, description } =
+    req.body;
+
+  if (
+    !companyname ||
+    !jobtitle ||
+    !location ||
+    !startdate ||
+    !enddate ||
+    !description
+  ) {
+    return res.status(400).json({
+      message:
+        "companyname, jobtitle, location, startdate, enddate and description is required",
+    });
+  }
+
+  const stmt = db.prepare(`
+  UPDATE workexperience SET companyname=?, jobtitle=?, location=?, startdate=?, enddate=?, description=? WHERE id=?;
+  `);
+
+  try {
+    const result = stmt.run(
+      companyname,
+      jobtitle,
+      location,
+      startdate,
+      enddate,
+      description,
+      req.params.id,
+    );
+    res.json({ message: "Updated" });
+  } catch (error) {
+    res.status(500).json({ message: "Could not update workexperience" });
+  }
+});
+
 app.delete("/workexperience/:id", (req, res) => {
   try {
     const result = db
