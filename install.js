@@ -1,8 +1,13 @@
-const database = require("better-sqlite3");
+/**
+ * Install-script av hur databas med tabell skapades.
+ * Av: Josefine Backlund
+ */
 
-const db = new database("./db/cv.db");
+const database = require("better-sqlite3"); //Hämtar better-sqlite3.
 
-db.exec(`
+const db = new database("./db/cv.db"); //Skapar en fil för tabellen och specificerar att den ska hamna i db-mappen.
+
+db.exec(` 
     CREATE TABLE IF NOT EXISTS workexperience (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     companyname TEXT NOT NULL,
@@ -13,5 +18,5 @@ db.exec(`
     description TEXT NOT NULL
     );
     `);
-
-db.close();
+//Ovan skapas en tabell som ska lagra informationen tillsammans med autogenererade id-nycklar.
+db.close(); //Stänger databasen.
