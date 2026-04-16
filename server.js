@@ -99,7 +99,8 @@ app.put("/workexperience/:id", (req, res) => {
       description,
       req.params.id,
     );
-    res.json({ message: "Updated" });
+    const workexperience = db.prepare("SELECT * FROM workexperience;").all();
+    res.json(workexperience);
   } catch (error) {
     res.status(500).json({ message: "Could not update workexperience" });
   }
