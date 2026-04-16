@@ -110,8 +110,10 @@ app.delete("/workexperience/:id", (req, res) => {
     const result = db
       .prepare("DELETE FROM workexperience WHERE id = ?;")
       .run(req.params.id);
-    res.json({ message: "Deleted" });
+    const workexperience = db.prepare("SELECT * FROM workexperience;").all();
+    res.json(workexperience);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Could not delete workexperience" });
   }
 });
